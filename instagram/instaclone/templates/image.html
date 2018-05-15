@@ -1,0 +1,29 @@
+{%extends 'base.html'%} {% block content %}
+
+<div class="container">
+
+    <div class="row">
+        <img style="width:10%; height:10% ; border-radius:97%;" src=" {{images.profile.avatar.url}}" class="img-responsive" alt=" image">
+        <p>{{details.profile.name}}</p>
+        <img src="{{details.image.url}}" class="img-responsive" alt="">
+    </div>
+
+    <div class="row">
+        <h1 class="text-center">{{details.image_name}}</h1>
+    </div>
+
+    <div class="row">
+
+        <p>{{article.image_caption}}</p>
+
+        <p>{{article.}}</p>
+
+    </div>
+
+    <div class="row">
+        <p>Posted {{details.posted|timesince}} by {{details.user.first_name}}</p>
+    </div>
+
+</div>
+
+{% endblock %}
