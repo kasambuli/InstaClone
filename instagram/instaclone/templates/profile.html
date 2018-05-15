@@ -1,0 +1,33 @@
+{% extends "base.html" %}{% block content %}
+
+
+<div class="container">
+
+    <div class="row">
+        <img style="width:40%; border-radius:99%;" src="{{profile.avatar.url}}" class="img-responsive" alt="profile picture">
+    </div>
+
+    <div class="row">
+        <h1 class="text-center">{{profile.name}}</h1>
+    </div>
+
+    <div class="row">
+
+        <h1 class="text-center">{{profile.bio}}</h1>
+
+    </div>
+    <div class="container">
+        <div class="row">
+            {% if image %} {% for img in images %}
+            <div class="col-md-3">
+
+                <img src="{{img.image.url }}" style="height:50%;" class="img-responsive">
+
+            </div>
+            {% endfor %} {% endif %}
+        </div>
+    </div>
+    {% endblock %}
+
+
+</div>
