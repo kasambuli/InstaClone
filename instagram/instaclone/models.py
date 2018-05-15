@@ -1,25 +1,90 @@
 from django.db import models
+import datetime as dt
 from django.contrib.auth.models import User
+
 
 # Create your models here.
 class Profile(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     name = models.CharField(blank = True,max_length = 30)
+    email = models.CharField(blank = True, max_length = 100)
     bio = models.TextField(max_length=100)
     avatar = models.ImageField(upload_to = 'avatar/')
+  
+    def __str__(self):
+        return self.name
 
+    def save_profile(self):
+        self.save()
+        
+    @classmethod
+    def get_profile(cls,id):
+        profile = Profile.objects.all()
+        return profile
+        
+    @classmethod
+    def update_profile(cls,id,new_name):
+        cls.objects.filter(id=id).update(name = new_name)
+
+    @classmethod
+    def delete_profile(cls,id):
+        cls.objects.filter(id).delete()
+
+
+    @classmethod
+    def search_by_name(cls, searched_name):
+        username = cls.objects.filter(name__icontains=searched_name)
+
+        return username
 
 class Image(models.Model):
     image = models.ImageField(upload_to = 'images/')
     image_name = models.CharField(blank = True, max_length = 30)
     image_caption = models.CharField(blank = True, max_length = 500)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    likes = models.IntegerField(default = 0)
-    posted = models.DateTimeField(auto_now_add=True)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE,blank = True)
+    likes = models.IntegerField(default = 0,blank=True)
+    posted = models.DateTimeField(auto_now_add=True,blank = True)
+
+    def save_image(self):
+        self.save()
+
+    @classmethod
+    def get_image_by_id(cls, id):
+        images = cls.objects.get(id=id)
+        return images
+
+    @classmethod
+    def delete_image(cls, id):
+        cls.objects.filter(id).delete()
+
+    @classmethod
+    def display_images(cls):
+        image = cls.objects.all()
+        return image
+
+    @classmethod
+    def update_caption(cls, id, new_caption):
+        cls.objects.filter(id=id).update(image_caption=new_caption)
 
 class Comments(models.Model):
     comment = models.TextField(blank = True, max_length=500)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ForeignKey(Image, on_delete=models.CASCADE)
-    posted = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,blank = True)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE,blank =True)
+    posted = models.DateTimeField(auto_now_add=True,blank = True)
+
+
+def __str__(self):
+    return self.comment
+
+def save_comment(self):
+    self.save()
+    
+    
+@classmethod
+def update_comment(cls,id,new_comment):
+    cls.objects.filter(id=id).update(comment = new_comment)
+
+@classmethod
+def delete_comment(cls,id):
+    cls.objects.filter(id).delete()
