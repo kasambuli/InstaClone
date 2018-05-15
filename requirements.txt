@@ -4,3 +4,4 @@ pytz==2018.4
 django-bootstrap==3-9.1.0
 psycopg==2-2.7.4
 django-registration==-2.4.1
+django-tinymce==-2.7.0
