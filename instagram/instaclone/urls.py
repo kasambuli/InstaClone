@@ -10,10 +10,15 @@ urlpatterns = [
     url(r'^profile/', views.update_profile, name='editProfile'),
     url(r'^images/', views.postImage, name='postImage'),
     url(r'^image/(\d+)', views.viewImage, name='viewImage'),
-    # url(r'^image/(\d+)/comment', views.comment, name='comment'), url(r'^likes/',views.likes,name = likes)
+    url(r'^likes/(\d+)',views.likes, name='likes'),
+    url(r'^explore/',views.explore,name = 'explore'),
+    url(r'^comment/(\d+)', views.comment, name='comment'), 
    
 ]
 
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+from django.conf.urls import url, include
+from django.contrib import admin
+from django.contrib.auth import views
