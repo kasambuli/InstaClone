@@ -59,7 +59,7 @@ def index(request):
     profile = Profile.objects.all()
     image = Image.display_images()
     comments = Comments.objects.all()
-
+    
     return render(request,'index.html',{"image":image,"current_user":current_user,"profile":profile,"comments":comments})
 
 
@@ -82,15 +82,18 @@ def comment(request, image_id):
 
     except ValueError:
         Http404
-    return render(request, 'comment.html', {"form": form, "current_image": current_image})
+    return render(request, 'comments.html', {"form": form, "current_image": current_image, id: image_id})
 
-def viewImage(request,image_id):
+
+def viewImage(request, image_id):
     try:
         details = Image.objects.get(id=image_id)
     except DoesNotExist:
         raise Http404()
-    comment = Comments.objects.filter(image =image)
-    return render(request, 'image.html', {"comment": comment,"details": details})
+    images = Image.objects.get(id = image_id)
+    comment = Comments.objects.filter(image= details)
+    images.likes.filter(id = request.user.id)
+    return render(request, 'image.html', {"comment": comment,"details": details, id: image_id,"likes":images.all_likes()})
 
 def postImage(request):
     current_user = request.user
@@ -113,12 +116,19 @@ def postImage(request):
 
 
 def likes(request, image_id):
-    image = Image.objects.get(pk=image_id)
-
+    image = Image.objects.get(id=image_id)
+    
     if image.likes.filter(id=request.user.id).exists():
         image.likes.remove(request.user)
 
     else:
-        image.likes.add(request.user)
+        image.likes.add(request.user,image.id)
 
-    return redirect('/')
+    return redirect(viewImage,image.id)
+
+def explore(request):
+
+    image = Image.objects.all()
+    comments = Comments.objects.all()
+
+    return render(request,'explore.html',{"image":image,"comments":comments})
