@@ -4,7 +4,7 @@
 <div class="container">
 
     <div class="row">
-        <img style="width:40%; border-radius:99%;" src="{{profile.avatar.url}}" class="img-responsive" alt="profile picture">
+        <img style="width:40%; border-radius:99%;" src=" {{img.profile.avatar.url}}" class="img-responsive" alt="profile picture">
     </div>
 
     <div class="row">
@@ -17,17 +17,35 @@
 
     </div>
     <div class="container">
+
         <div class="row">
-            {% if image %} {% for img in images %}
-            <div class="col-md-3">
+            {% if image %}{% for img in image %}
 
-                <img src="{{img.image.url }}" style="height:50%;" class="img-responsive">
+            <div class="col-md-4 ">
 
-            </div>
-            {% endfor %} {% endif %}
+
+
+                <a href="{% url 'viewImage' img.id%}">
+                    <img src="{{img.image.url}}" class=" img img-responsive" alt="Image" style="width:100%">
+                </a>
+
+
+
+                +
+                <h2 class="text-center"> {{ img.image_name }} </h2>
+                <p class="text-center"> {{ img.image_caption }} </p>
+                <p class="text-center"> {{ img.likes }} </p>
+
+            </div> {% endfor %} {% else %}
+            <h1>post your photos!</h1>
+            {% endif %}
         </div>
-    </div>
-    {% endblock %}
 
+
+    </div>
 
 </div>
+{% endblock%}
+
+
+</div>-+
