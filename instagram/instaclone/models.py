@@ -10,7 +10,7 @@ class Profile(models.Model):
     email = models.CharField(blank = True, max_length = 100)
     bio = models.TextField(max_length=100)
     avatar = models.ImageField(upload_to = 'avatar/')
-  
+    follow = models.ManyToManyField(User, related_name='follows',blank = True)
     def __str__(self):
         return self.name
 

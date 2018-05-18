@@ -7,32 +7,30 @@
     <!-- Looping through projects   -->
 
     <div class="row">
+
+
         {% if image %}{% for img in image %}
+        <div class="card" style="width: 50%; align-content: center">
+            <p>
+                <img style="width:50px; height:50px ; border-radius:50%;" src=" {{img.profile.avatar.url}}" class="img-responsive" alt=" image">{{img.profile.name}}
+            </p>
+
+            <a href="{% url 'viewImage' img.id%}">
+                <img src="{{img.image.url}}" class=" img img-responsive" alt="Image" style="width:100%">
+            </a>
 
 
-        <div class="col-md-12">
-            <div class="card">
-                <div class="row">
-                    <p><img style="width:50px; height:50px ; border-radius:50%;" src=" {{img.profile.avatar.url}}" class="img-responsive" alt=" image">{{img.profile.name}}</p>
-                </div>
 
+            <h2 class="text-center"> {{ img.image_name }} </h2>
+            <p class="text-center"> {{ img.image_caption }} </p>
 
-                <a href="{% url 'viewImage' img.id%}"><img src="{{img.image.url}}" class=" img img-responsive" alt="Image" style="width:100%"></a>
+        </div><br> {% endfor %}
 
-                <div class="container">
-                    </h5>
-                    <h2 class="text-center"> {{ img.image_name }} </h2>
-                    <p class="text-center"> {{ img.image_caption }} </p>
-
-
-                    </p>
-                </div>
-            </div>
-        </div>
     </div>
+</div>
 
 </div>
-{% endfor %} {% else %}
+{% else %}
 <h1>post your photos!</h1>
 {% endif %}
 </div>

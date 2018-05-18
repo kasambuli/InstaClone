@@ -132,3 +132,13 @@ def explore(request):
     comments = Comments.objects.all()
 
     return render(request,'explore.html',{"image":image,"comments":comments})
+def follow(request,user_id):
+    current_user =User.objects.get(id = user_id)
+    follow = Profile.objects.get(id=request.user.id)
+
+    if follow.follow.filter(id = user_id).exists():
+        follow.follow.remove(current_user)
+    else:
+        follow.follow.add(current_user)
+
+    return redirect(profile,current_user.id)

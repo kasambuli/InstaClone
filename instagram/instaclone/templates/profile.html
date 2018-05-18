@@ -1,51 +1,72 @@
-{% extends "base.html" %}{% block content %}
+{%extends 'base.html'%} {% block content %} {% load bootstrap3 %}{% load static%}{{ block.super}} {% block styles %} {% bootstrap_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}"> {% endblock %}
 
 
-<div class="container">
-
-    <div class="row">
-        <img style="width:40%; border-radius:99%;" src=" {{img.profile.avatar.url}}" class="img-responsive" alt="profile picture">
-    </div>
+<div class="container" style="padding: 80px 16px;">
 
     <div class="row">
-        <h1 class="text-center">{{profile.name}}</h1>
-    </div>
+        <span class="col-md-4">
+             <img style="width:40%; border-radius:99%;" src=" {{profile.avatar.url}}" class="img-responsive" alt="avatar">
+        </span>
+        <span class="col-md-2"></span>
+        <span class="col-md-6"> {%if following %}
+    <button type="submit" name="" class="btn btn-warning">
+        <a href="{%url 'follow' profile.id %}" style="color:white;">Unfollow</a>
+    </button> {% else %}
+    <button type="submit" name="" class="btn btn-warning ">
+        <a href="{%url 'follow' profile.id %}" style="color:white;">Follow</a>
+    </button> {% endif %}
 
-    <div class="row">
-
-        <h1 class="text-center">{{profile.bio}}</h1>
-
-    </div>
-    <div class="container">
-
+    <div class="col-sm-4">
         <div class="row">
-            {% if image %}{% for img in image %}
-
-            <div class="col-md-4 ">
-
-
-
-                <a href="{% url 'viewImage' img.id%}">
-                    <img src="{{img.image.url}}" class=" img img-responsive" alt="Image" style="width:100%">
-                </a>
-
-
-
-                +
-                <h2 class="text-center"> {{ img.image_name }} </h2>
-                <p class="text-center"> {{ img.image_caption }} </p>
-                <p class="text-center"> {{ img.likes }} </p>
-
-            </div> {% endfor %} {% else %}
-            <h1>post your photos!</h1>
-            {% endif %}
-        </div>
-
-
+            <div class="col-xs-4">
+                <h3>Post</h3>
+                <h4>
+                    <span class="badge" style=" background-color:purple;font-size:27px;">{{ images|length}} </span>
+        </h4>
     </div>
+    <div class="col-xs-4">
+        <h3>Following</h3>
+        <h4>
+            <div class="badge" style=" background-color:purple;font-size:27px;">{{following|length}}</div>
+        </h4>
+    </div>
+
+    <div class="col-xs-4">
+        <h3>Followers</h3>
+        <h4>
+            <div class="badge" style=" background-color:purple;font-size:27px;">{{followers|length}}</div>
+        </h4>
+    </div>
+    <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous">
+                <a href="#">
+                    <p class="text-center" style="color:purple;width:280px;">Edit Profile</p>
+                </a>
+            </li>
+        </ul>
+    </nav>
 
 </div>
-{% endblock%}
+
+</div>
 
 
-</div>-+
+<hr>
+</span>
+
+</div>
+
+
+<div class="row">
+    <h1 class="text-center">{{profile.name}}</h1>
+</div>
+
+<div class="row">
+
+    <h1 class="text-center">{{profile.bio}}</h1>
+
+</div>
+
+{% endblock %}
