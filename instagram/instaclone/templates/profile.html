@@ -1,6 +1,5 @@
-{%extends 'base.html'%} {% block content %} {% load bootstrap3 %}{% load static%}{{ block.super}} {% block styles %} {% bootstrap_css %}
-<link rel="stylesheet" href="{% static 'css/profile.css' %}"> {% endblock %}
-
+ {%extends 'base.html'%} {% block content %} {% load bootstrap3 %}{% load static%}{{ block.super}} {% block styles %} {% bootstrap_css %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}"> {% endblock %}
 
 <div class="container" style="padding: 80px 16px;">
 
@@ -9,64 +8,64 @@
              <img style="width:40%; border-radius:99%;" src=" {{profile.avatar.url}}" class="img-responsive" alt="avatar">
         </span>
         <span class="col-md-2"></span>
-        <span class="col-md-6"> {%if following %}
-    <button type="submit" name="" class="btn btn-warning">
-        <a href="{%url 'follow' profile.id %}" style="color:white;">Unfollow</a>
-    </button> {% else %}
-    <button type="submit" name="" class="btn btn-warning ">
-        <a href="{%url 'follow' profile.id %}" style="color:white;">Follow</a>
-    </button> {% endif %}
 
-    <div class="col-sm-4">
+
+
+        <div class="col-sm-4">
+            <div class="row">
+                <div class="col-xs-4">
+                    <h3>Post</h3>
+                    <h4>
+                        <span class="badge" style="font-size:27px;">{{ image|length}} </span>
+                    </h4>
+                </div>
+
+                <nav aria-label="... ">
+                    <ul class="pager ">
+                        <li class="previous ">
+                            <a href="{% url 'editProfile' %}">
+                                <p class="text-center " style="width:280px; ">Edit Profile</p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+
+        </div>
+
+
+        <hr>
+        </span>
+
+    </div>
+
+
+    <div class="row ">
+        <h1 class="text-center ">{{profile.name}}</h1>
+    </div>
+
+    <div class="row ">
+
+        <h1 class="text-center ">{{profile.bio}}</h1>
+
+    </div>
+    <div class="container">
+
         <div class="row">
-            <div class="col-xs-4">
-                <h3>Post</h3>
-                <h4>
-                    <span class="badge" style=" background-color:purple;font-size:27px;">{{ images|length}} </span>
-        </h4>
-    </div>
-    <div class="col-xs-4">
-        <h3>Following</h3>
-        <h4>
-            <div class="badge" style=" background-color:purple;font-size:27px;">{{following|length}}</div>
-        </h4>
-    </div>
 
-    <div class="col-xs-4">
-        <h3>Followers</h3>
-        <h4>
-            <div class="badge" style=" background-color:purple;font-size:27px;">{{followers|length}}</div>
-        </h4>
-    </div>
-    <nav aria-label="...">
-        <ul class="pager">
-            <li class="previous">
-                <a href="#">
-                    <p class="text-center" style="color:purple;width:280px;">Edit Profile</p>
-                </a>
-            </li>
-        </ul>
-    </nav>
-
-</div>
-
-</div>
+            <div class="col-md-4">
+                {% if image %}{% for img in image %}
 
 
-<hr>
-</span>
+                <a href="{% url 'viewImage' img.id%}">
 
-</div>
+                    <img src="{{img.image.url}}" class=" img img-responsive" alt="Image" style="width:100%"> </a>
 
 
-<div class="row">
-    <h1 class="text-center">{{profile.name}}</h1>
-</div>
 
-<div class="row">
+                {% endfor %} {% endif %}
 
-    <h1 class="text-center">{{profile.bio}}</h1>
-
-</div>
-
-{% endblock %}
+            </div>
+        </div>
+    </div>{% endblock %}
