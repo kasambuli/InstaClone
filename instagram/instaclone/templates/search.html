@@ -13,20 +13,15 @@
     <div class="row">
 
         {% if username %} {% for name in username %}
-        <div class="col-sm-6 col-md-3">
-            <img src="{{name.avatar.url}}" class="img-responsive" alt="Image">{{name.name}}
-        </div>
-        <div class="row">
-            <h1>
-
-            </h1>
-
-
-
-
-
+        <div class="col-md-2"></div>
+        <div class="col-sm-6 col-md-8">
+            <a href="{% url 'profile' name.id%}">
+                <img src="{{name.avatar.url}}" class="img-responsive" alt="Image" style="width:100%">{{name.name}}
+            </a>
 
         </div>
+        <div class="col-md-2"></div>
+
 
 
         {% endfor %} {% endif %}
