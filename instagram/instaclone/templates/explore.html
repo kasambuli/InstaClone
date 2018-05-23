@@ -1,4 +1,5 @@
  {%extends 'base.html'%} {% block content %} {% load bootstrap3 %}{% load static%}{{ block.super}} {% block styles %} {% bootstrap_css %}
+
 <link rel="stylesheet" href="{% static 'css/index.css' %}"> {% endblock %}
 
 
@@ -10,35 +11,29 @@
         {% if image %}{% for img in image %}
 
 
-        <div class="col-md-12">
-            <div class="card">
-                <div class="row">
-                    <p>
-                        <img style="width:50px; height:50px ; border-radius:50%;" src=" {{img.profile.avatar.url}}" class="img-responsive" alt=" image">{{img.profile.name}}</p>
-                </div>
 
-
-                <a href="{% url 'viewImage' img.id%}">
-                    <img src="{{img.image.url}}" class=" img img-responsive" alt="Image" style="width:100%">
-                </a>
-
-                <div class="container">
-                    </h5>
-                    <h2 class="text-center"> {{ img.image_name }} </h2>
-                    <p class="text-center"> {{ img.image_caption }} </p>
-                    <p class="text-center">
-                        <a href="{% url 'likes' %}">
-                            <ion-icon name="heart">{{ img.likes}}</ion-icon>
-                        </a>
-                    </p>
-                </div>
+        <div class="card" style="width: 50%; align-content: center">
+            <div class="row">
+                <p>
+                    <img style="width:50px; height:50px ; border-radius:50%;" src=" {{img.profile.avatar.url}}" class="img-responsive" alt=" image">{{img.profile.name}}</p>
             </div>
+
+
+            <a href="{% url 'viewImage' img.id%}">
+                <img src="{{img.image.url}}" class=" img img-responsive" alt="Image" style="width:100%">
+            </a>
+
+
+
+            <h2 class="text-center"> {{ img.image_name }} </h2>
+            <p class="text-center"> {{ img.image_caption }} </p>
+
         </div>
     </div>
+</div>
+</div>
 
 </div>
-{% endfor %} {% else %}
-<h1>post your photos!</h1>
-{% endif %}
+{% endfor %} {% endif %}
 </div>
 {% endblock%}
