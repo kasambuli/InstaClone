@@ -9,19 +9,9 @@ from django.contrib.auth import login, authenticate
 
 @login_required(login_url='/accounts/login/')
 def update_profile(request):
-    '''
-    method to update the profiles of different users
-    '''
-    title = "update profile"
-
     current_user = request.user
-
     if request.method == 'POST':
-        if Profile.objects.filter(user_id = current_user).exists():
-            form = ProfileForm(request.POST, request.FILES,instance = Profile.objects.get(user_id = current_user))
-        else:
-            form = ProfileForm(request.POST,request.FILES)
-
+        form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
             profile = form.save(commit=False)
             user = Profile.objects.get(user=current_user)
@@ -36,24 +26,20 @@ def update_profile(request):
     return render(request, 'editprofile.html', {"form": form})
 
 @login_required
-def profile(request,profile_id):
+def profile(request):
     current_user = request.user
     current_user.id = request.user.id
-    current_profile = Profile.objects.get(id=profile_id)
     try:
-        profile = Profile.objects.get(id = profile_id)
-        image = Image.objects.filter(profile = current_profile)
+        profile = Profile.objects.get(user_id = current_user.id)
+        image = Image.objects.filter(car__user = current_user.id)
 
-        return render(request, 'profile.html', {"profile":profile, "image": image,"current_id":profile_id})
+        return render(request, 'profile.html', {"profile":profile, "image": image})
 
 
     except ValueError:
         raise Http404()
 
 def search_username(request):
-    '''
-    method to dearch for a different user
-    '''
 
     if 'name' in request.GET and request.GET["name"]:
         searched_name = request.GET.get("name")
